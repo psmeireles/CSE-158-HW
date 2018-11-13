@@ -1,0 +1,969 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{HW3}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{gzip}
+        \PY{k+kn}{import} \PY{n+nn}{random}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{string}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
+        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{defaultdict}
+\end{Verbatim}
+
+
+    \subsubsection{Question 1}\label{question-1}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{readGz}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
+          \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
+            \PY{k}{yield} \PY{n+nb}{eval}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{readGz}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train.json.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+            \PY{n}{train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{notPurchased} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100000}\PY{p}{)}\PY{p}{:}
+            \PY{n}{user} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
+            \PY{n}{product} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
+            \PY{n}{v} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,}
+                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
+            \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{n}{notPurchased}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+m+mi}{100000}\PY{p}{:}\PY{p}{]}
+        \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{100000}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{validation} \PY{o}{+} \PY{n}{notPurchased}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
+        
+        \PY{n}{businessCount} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+        \PY{n}{totalPurchases} \PY{o}{=} \PY{l+m+mi}{0}
+        
+        \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+          \PY{n}{user}\PY{p}{,}\PY{n}{business} \PY{o}{=} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+          \PY{n}{businessCount}\PY{p}{[}\PY{n}{business}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+          \PY{n}{totalPurchases} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{mostPopular} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{businessCount}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{businessCount}\PY{p}{]}
+        \PY{n}{mostPopular}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+        \PY{n}{mostPopular}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{return1} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{ic}\PY{p}{,} \PY{n}{i} \PY{o+ow}{in} \PY{n}{mostPopular}\PY{p}{:}
+          \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{n}{ic}
+          \PY{n}{return1}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+          \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{totalPurchases}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{:} \PY{k}{break}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{validationResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{expectedResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{validation}\PY{p}{:}
+            \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{in} \PY{n}{return1}\PY{p}{:}
+                \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{l+m+mi}{100000}\PY{p}{:}
+                \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{i} \PY{o}{=} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{comparison} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{validationResult}\PY{p}{,} \PY{n}{expectedResult}\PY{p}{)}\PY{p}{)}
+         \PY{n}{accuracyV} \PY{o}{=} \PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{comparison}\PY{p}{]}
+         \PY{n}{accuracy} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{accuracy}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} 0.47252
+\end{Verbatim}
+            
+    \subsubsection{Question 2}\label{question-2}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
+         
+         \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{percentile}\PY{p}{)}\PY{p}{:}
+             \PY{n}{return1} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+             \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+             \PY{k}{for} \PY{n}{ic}\PY{p}{,} \PY{n}{i} \PY{o+ow}{in} \PY{n}{mostPopular}\PY{p}{:}
+               \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{n}{ic}
+               \PY{n}{return1}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+               \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{totalPurchases}\PY{o}{*}\PY{n}{percentile}\PY{p}{:} \PY{k}{break}
+         
+             \PY{n}{validationResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{X}\PY{p}{:}
+                 \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{in} \PY{n}{return1}\PY{p}{:}
+                     \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+                     
+             \PY{k}{return} \PY{n}{validationResult}
+         
+         \PY{k}{def} \PY{n+nf}{modelAccuracy}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{real\PYZus{}y}\PY{p}{)}\PY{p}{:}
+             \PY{n}{comparison} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{real\PYZus{}y}\PY{p}{)}\PY{p}{)}
+             \PY{n}{accuracyV} \PY{o}{=} \PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{comparison}\PY{p}{]}
+             \PY{k}{return} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{percent} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{res} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{101}\PY{p}{)}\PY{p}{:}
+             \PY{n}{percentile} \PY{o}{=} \PY{n}{i}\PY{o}{/}\PY{l+m+mi}{100}
+             \PY{n}{percent}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{percentile}\PY{p}{)}
+             \PY{n}{result} \PY{o}{=} \PY{n}{predict}\PY{p}{(}\PY{n}{validation}\PY{p}{,} \PY{n}{percentile}\PY{p}{)}
+             \PY{n}{acc} \PY{o}{=} \PY{n}{modelAccuracy}\PY{p}{(}\PY{n}{result}\PY{p}{,} \PY{n}{expectedResult}\PY{p}{)}
+             \PY{n}{res}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{acc}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{percent}\PY{p}{,} \PY{n}{res}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{percentile}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{percent}\PY{p}{[}\PY{n}{res}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} 0.01
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} 0.500185
+\end{Verbatim}
+            
+    The best performance is achieved when using the 1st percentile. The
+accuracy is 0.500185
+
+    \subsubsection{Question 3}\label{question-3}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{predictions} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predictions\PYZus{}Purchase.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pairs\PYZus{}Purchase.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{l}\PY{o}{.}\PY{n}{startswith}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reviewerID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}header}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+                 \PY{k}{continue}
+             \PY{n}{u}\PY{p}{,}\PY{n}{i} \PY{o}{=} \PY{n}{l}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{userCategories} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train} \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{u}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{itemCat} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train} \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{i}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{k}{if} \PY{n}{itemCat} \PY{o}{!=} \PY{p}{[}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{itemCat} \PY{o}{=} \PY{n}{itemCat}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             
+             \PY{k}{if} \PY{n}{itemCat} \PY{o}{!=} \PY{p}{[}\PY{p}{]} \PY{o+ow}{and} \PY{n}{itemCat} \PY{o+ow}{in} \PY{n}{userCategories}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{i} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,1}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{i} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{predictions}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Question 4}\label{question-4}
+
+    Username: psousame
+
+Team Name: Pedro Meireles
+
+    \subsubsection{Question 5}\label{question-5}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{readGz}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train.json.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{n}{train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{subSet} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{20000}\PY{p}{)}\PY{p}{:}
+             \PY{n}{index} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{19999}\PY{p}{)}
+             \PY{n}{subSet}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{subSet}\PY{p}{[}\PY{n+nb}{len}\PY{p}{(}\PY{n}{subSet}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{:}\PY{p}{]}
+         \PY{n}{train} \PY{o}{=} \PY{n}{subSet}\PY{p}{[}\PY{p}{:}\PY{n+nb}{len}\PY{p}{(}\PY{n}{subSet}\PY{p}{)}\PY{o}{/}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{usersCats} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{list}\PY{p}{)}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+             \PY{n}{user} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{usersCats}\PY{p}{[}\PY{n}{user}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         
+         \PY{n}{mostCommonCat} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{,}\PY{l+m+mi}{0}\PY{p}{]}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+             \PY{n}{user} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{index} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{usersCats}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{=} \PY{n}{usersCats}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{1}
+             \PY{n}{mostCommonCat}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{=} \PY{n}{mostCommonCat}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{usersCats}\PY{p}{:}
+             \PY{n}{maxIndices} \PY{o}{=} \PY{p}{[}\PY{n}{i} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{usersCats}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{k}{if} \PY{n}{x} \PY{o}{==} \PY{n+nb}{max}\PY{p}{(}\PY{n}{usersCats}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)}\PY{p}{]}
+             \PY{n}{catID} \PY{o}{=} \PY{p}{[}\PY{n}{mostCommonCat}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n}{maxIndices}\PY{p}{]}
+             \PY{n}{catID} \PY{o}{=} \PY{n}{maxIndices}\PY{p}{[}\PY{n}{catID}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{catID}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+             \PY{n}{usersCats}\PY{p}{[}\PY{n}{v}\PY{p}{]} \PY{o}{=} \PY{n}{catID}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{predictions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{n}{actualValue} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{validation}\PY{p}{:}
+            \PY{n}{user} \PY{o}{=} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+            \PY{k}{if} \PY{n}{user} \PY{o+ow}{in} \PY{n}{usersCats}\PY{p}{:}
+                \PY{n}{predictions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{usersCats}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{)}
+            \PY{k}{else}\PY{p}{:}
+                \PY{n}{predictions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+            \PY{n}{actualValue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{comparison} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{predictions}\PY{p}{,} \PY{n}{actualValue}\PY{p}{)}\PY{p}{)}
+        \PY{n}{accuracy} \PY{o}{=} \PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{comparison}\PY{p}{]}
+        \PY{n}{accuracy} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}
+        \PY{n}{accuracy}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} 0.8187
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{predictions} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predictions\PYZus{}Category.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pairs\PYZus{}Category.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{l}\PY{o}{.}\PY{n}{startswith}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reviewerID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}header}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+                 \PY{k}{continue}
+             \PY{n}{u}\PY{p}{,}\PY{n}{i} \PY{o}{=} \PY{n}{l}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{k}{if} \PY{n}{u} \PY{o+ow}{in} \PY{n}{usersCats}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{i} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{usersCats}\PY{p}{[}\PY{n}{u}\PY{p}{]}\PY{p}{)} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{i} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{,0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         
+         \PY{n}{predictions}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{Question 6}\label{question-6}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{wordCount} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{punctuation} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{n}{string}\PY{o}{.}\PY{n}{punctuation}\PY{p}{)}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+             \PY{n}{r} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{c} \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{o+ow}{not} \PY{n}{c} \PY{o+ow}{in} \PY{n}{punctuation}\PY{p}{]}\PY{p}{)}
+             \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{r}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{wordCount}\PY{p}{[}\PY{n}{w}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{wordCount} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{wordCount}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{,} \PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{wordCount}\PY{p}{]}
+         \PY{n}{wordCount}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         \PY{n}{wordCount}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{totalWords} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{wordCount}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{frequency} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{/}\PY{n}{totalWords}\PY{p}{,} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{wordCount}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{catWordCount} \PY{o}{=} \PY{p}{[}\PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{,} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{,} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{,} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{,} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{]}
+         \PY{n}{catTotalWords} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{]}
+         \PY{n}{catFrequency} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+             \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{p}{[}\PY{n}{v} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train} \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{==} \PY{n}{i}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{r} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{p}{[}\PY{n}{c} \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{lower}\PY{p}{(}\PY{p}{)} \PY{k}{if} \PY{o+ow}{not} \PY{n}{c} \PY{o+ow}{in} \PY{n}{punctuation}\PY{p}{]}\PY{p}{)}
+                 \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{r}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+                     \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{w}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+             
+             \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{n}{w}\PY{p}{]}\PY{p}{,} \PY{n}{w}\PY{p}{)} \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}
+             \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+             \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+             
+             \PY{n}{catTotalWords}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+             \PY{n}{catFrequency}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{/}\PY{n}{catTotalWords}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{,} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{catWordCount}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{CategoryID = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{catFrequency}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{f} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{p}{[}\PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{frequency} \PY{k}{if} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ \PYZhy{} }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CategoryID = 0
+the - -0.0001830118442185738
+i - 0.0033639416588894383
+and - 0.00013154814794518604
+a - 0.00017151733026209842
+it - 0.0013979045179383365
+to - -5.735199828152404e-05
+is - -1.8542851970240748e-05
+for - -0.0006914201788361021
+this - 0.0003678141018239392
+in - 0.00016154547404756588
+
+CategoryID = 1
+the - 0.0007219045468786905
+i - -0.00725930284502313
+and - -0.000475814828130805
+a - -2.874195769825283e-05
+to - 0.00019532598714466776
+is - -7.155610571632845e-05
+it - -0.003432213312138343
+for - 0.0012323506655017892
+of - 0.0012031414365440852
+in - -0.00028453338477869676
+
+CategoryID = 2
+the - -0.0025907973113547325
+and - 0.0016222582519749493
+i - -0.008940365249605942
+a - -0.001840804437797234
+it - 0.003825898935718528
+to - 0.00037173734580276535
+for - 0.0045828249158813145
+is - 0.0017084864812889032
+my - 0.004234039467868931
+this - 0.0011560368560521832
+
+CategoryID = 3
+the - -0.0017261461279429666
+and - 0.0005600184426730673
+a - -0.0026411741360753346
+i - -0.015680574597252032
+to - -0.0004661007835804615
+for - 0.005814946457524731
+is - 0.0008455558323745838
+it - -0.002869327476240576
+my - 0.005094340821756282
+they - 0.0019342949678975378
+
+CategoryID = 4
+the - -0.0021038049108826062
+and - 0.0012281013563130855
+i - -0.013016485752960435
+a - -0.0055148783855534615
+to - -0.000965385310450477
+for - 0.004342980689654028
+is - 0.000644616162266503
+they - 0.004425295974886974
+are - 0.004344480796026496
+it - -0.004816703944121101
+
+
+    \end{Verbatim}
+
+    \subsubsection{Question 7}\label{question-7}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{X\PYZus{}validation} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{y\PYZus{}validation} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+             \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+             \PY{n}{features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{frequency}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+             
+                 
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{validation}\PY{p}{:}
+             \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                 \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+             \PY{n}{features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{frequency}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{y\PYZus{}validation}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{X\PYZus{}validation}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{test\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{svms} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{]}\PY{p}{:}
+             \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{C}\PY{o}{=}\PY{n}{c}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+             \PY{n}{test\PYZus{}predictions} \PY{o}{=} \PY{n}{clf}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}validation}\PY{p}{)}
+             \PY{n}{accuracy} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{test\PYZus{}predictions}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{accuracy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{test\PYZus{}predictions}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{y\PYZus{}validation}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+             \PY{n}{test\PYZus{}accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{c}\PY{p}{,} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+             \PY{n}{svms}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{test\PYZus{}accuracies}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} [(0.01, 0.7714), (0.1, 0.7915), (1, 0.7908), (10, 0.7933), (100, 0.7918)]
+\end{Verbatim}
+            
+    The best performance was an accuracy of 0.7933 using C = 10
+
+    \subsubsection{Question 8}\label{question-8}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n}{newTrain} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10000}\PY{p}{]}
+         \PY{n}{newValidation} \PY{o}{=} \PY{n}{validation}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{10000}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{n}{allPredictions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{allSvms} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{realValidationY} \PY{o}{=} \PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{newValidation}\PY{p}{]}
+         \PY{k}{for} \PY{n}{c} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mf}{0.01}\PY{p}{,} \PY{l+m+mf}{0.1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{100}\PY{p}{]}\PY{p}{:}
+             \PY{n}{svms} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{c}\PY{p}{)}\PY{p}{)}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Category = }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{i}\PY{p}{)}\PY{p}{)}
+                 \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{n}{X\PYZus{}validation} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{n}{y\PYZus{}validation} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                 \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{newTrain}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{i}\PY{p}{:}
+                         \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZpc{}}\PY{k}{5}
+                     \PY{n}{features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{frequency}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{y\PYZus{}train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+         
+         
+                 \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{newValidation}\PY{p}{:}
+                     \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{!=} \PY{n}{i}\PY{p}{:}
+                         \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{p}{(}\PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{o}{\PYZpc{}}\PY{k}{5}
+                     \PY{n}{features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+                     \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{:}
+                         \PY{n}{features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{frequency}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{y\PYZus{}validation}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categoryID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+                     \PY{n}{X\PYZus{}validation}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+         
+                 \PY{n}{test\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         
+                 \PY{n}{clf} \PY{o}{=} \PY{n}{svm}\PY{o}{.}\PY{n}{SVC}\PY{p}{(}\PY{n}{C}\PY{o}{=}\PY{n}{c}\PY{p}{,} \PY{n}{kernel}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{linear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{clf}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{)}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fit done}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{svms}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{p}{)}
+                 
+             \PY{n}{test\PYZus{}predictions} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Predicting}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{X\PYZus{}validation}\PY{p}{:}
+                 \PY{n}{confidency} \PY{o}{=} \PY{p}{[}\PY{n}{svms}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{decision\PYZus{}function}\PY{p}{(}\PY{p}{[}\PY{n}{v}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
+                 \PY{n}{posConf} \PY{o}{=} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{confidency} \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{]}
+                 \PY{n}{posConf}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+                 \PY{k}{if} \PY{n}{posConf} \PY{o}{==} \PY{p}{[}\PY{p}{]}\PY{p}{:}
+                     \PY{n}{test\PYZus{}predictions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{n}{test\PYZus{}predictions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{confidency}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{posConf}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+             \PY{n}{allPredictions}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{c}\PY{p}{,} \PY{n}{test\PYZus{}predictions}\PY{p}{]}\PY{p}{)}
+             \PY{n}{allSvms}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{svms}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Finished}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.01
+Category = 0
+Fit done
+Category = 1
+Fit done
+Category = 2
+Fit done
+Category = 3
+Fit done
+Category = 4
+Fit done
+Predicting
+Finished
+
+0.1
+Category = 0
+Fit done
+Category = 1
+Fit done
+Category = 2
+Fit done
+Category = 3
+Fit done
+Category = 4
+Fit done
+Predicting
+Finished
+
+1
+Category = 0
+Fit done
+Category = 1
+Fit done
+Category = 2
+Fit done
+Category = 3
+Fit done
+Category = 4
+Fit done
+Predicting
+Finished
+
+10
+Category = 0
+Fit done
+Category = 1
+Fit done
+Category = 2
+Fit done
+Category = 3
+Fit done
+Category = 4
+Fit done
+Predicting
+Finished
+
+100
+Category = 0
+Fit done
+Category = 1
+Fit done
+Category = 2
+Fit done
+Category = 3
+Fit done
+Category = 4
+Fit done
+Predicting
+Finished
+
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{n}{test\PYZus{}accuracies} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{allPredictions}\PY{p}{:}
+             \PY{n}{predicted} \PY{o}{=} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             \PY{n}{accuracy} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{predicted}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{accuracy}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{predicted}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{==} \PY{n}{realValidationY}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+             \PY{n}{test\PYZus{}accuracies}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracy}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{n}{test\PYZus{}accuracies}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}54}]:} [(0.01, 0.2286), (0.1, 0.7914), (1, 0.2089), (10, 0.7929), (100, 0.2082)]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{n}{test} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{readGz}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{test\PYZus{}Category.json.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{n}{test}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}56}]:} \PY{n}{X\PYZus{}test}\PY{o}{=}\PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{test}\PY{p}{:}
+             \PY{n}{features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+             \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{)}\PY{p}{:}
+                 \PY{n}{features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{frequency}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o+ow}{in} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewText}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+             \PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{features}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}60}]:} \PY{n}{predictions} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{predictions\PYZus{}Category.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{pairs\PYZus{}Category.txt}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{k}{if} \PY{n}{l}\PY{o}{.}\PY{n}{startswith}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{reviewerID}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+                 \PY{c+c1}{\PYZsh{}header}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+                 \PY{k}{continue}
+             \PY{n}{u}\PY{p}{,}\PY{n}{r} \PY{o}{=} \PY{n}{l}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{split}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             
+             \PY{n}{confidency} \PY{o}{=} \PY{p}{[}\PY{n}{allSvms}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{[}\PY{n}{j}\PY{p}{]}\PY{o}{.}\PY{n}{decision\PYZus{}function}\PY{p}{(}\PY{p}{[}\PY{n}{X\PYZus{}test}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{]}\PY{p}{)} \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{]}
+             \PY{n}{posConf} \PY{o}{=} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{confidency} \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}} \PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{posConf}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+             \PY{k}{if} \PY{n}{posConf} \PY{o}{==} \PY{p}{[}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{r} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,0}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{predictions}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{u} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{r} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{,}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{confidency}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{posConf}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{i} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n}{predictions}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
