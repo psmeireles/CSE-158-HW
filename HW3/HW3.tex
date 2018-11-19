@@ -281,119 +281,119 @@
 
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{gzip}
-        \PY{k+kn}{import} \PY{n+nn}{random}
-        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-        \PY{k+kn}{import} \PY{n+nn}{string}
-        \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
-        \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{defaultdict}
+{\color{incolor}In [{\color{incolor}61}]:} \PY{k+kn}{import} \PY{n+nn}{gzip}
+         \PY{k+kn}{import} \PY{n+nn}{random}
+         \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+         \PY{k+kn}{import} \PY{n+nn}{string}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn} \PY{k}{import} \PY{n}{svm}
+         \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{defaultdict}
 \end{Verbatim}
 
 
     \subsubsection{Question 1}\label{question-1}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}2}]:} \PY{k}{def} \PY{n+nf}{readGz}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
-          \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
-            \PY{k}{yield} \PY{n+nb}{eval}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}62}]:} \PY{k}{def} \PY{n+nf}{readGz}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
+           \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{gzip}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{f}\PY{p}{)}\PY{p}{:}
+             \PY{k}{yield} \PY{n+nb}{eval}\PY{p}{(}\PY{n}{l}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-        \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{readGz}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train.json.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
-            \PY{n}{train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}63}]:} \PY{n}{train} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{readGz}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train.json.gz}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{:}
+             \PY{n}{train}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{l}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{notPurchased} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100000}\PY{p}{)}\PY{p}{:}
-            \PY{n}{user} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
-            \PY{n}{product} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
-            \PY{n}{v} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,}
-                \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
-            \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-            \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-            \PY{n}{notPurchased}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}64}]:} \PY{n}{notPurchased} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{100000}\PY{p}{)}\PY{p}{:}
+             \PY{n}{user} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
+             \PY{n}{product} \PY{o}{=} \PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{99999}\PY{p}{)}
+             \PY{n}{v} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{,}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}} \PY{p}{:} \PY{l+m+mi}{0}\PY{p}{\PYZcb{}}
+             \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{user}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{n}{product}\PY{p}{]}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+             \PY{n}{notPurchased}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{v}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+m+mi}{100000}\PY{p}{:}\PY{p}{]}
-        \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{100000}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}65}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{l+m+mi}{100000}\PY{p}{:}\PY{p}{]}
+         \PY{n}{train} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{100000}\PY{p}{]}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{validation} \PY{o}{+} \PY{n}{notPurchased}
+{\color{incolor}In [{\color{incolor}66}]:} \PY{n}{validation} \PY{o}{=} \PY{n}{validation} \PY{o}{+} \PY{n}{notPurchased}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
-        
-        \PY{n}{businessCount} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
-        \PY{n}{totalPurchases} \PY{o}{=} \PY{l+m+mi}{0}
-        
-        \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
-          \PY{n}{user}\PY{p}{,}\PY{n}{business} \PY{o}{=} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
-          \PY{n}{businessCount}\PY{p}{[}\PY{n}{business}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
-          \PY{n}{totalPurchases} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+{\color{incolor}In [{\color{incolor}67}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
+         
+         \PY{n}{businessCount} \PY{o}{=} \PY{n}{defaultdict}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}
+         \PY{n}{totalPurchases} \PY{o}{=} \PY{l+m+mi}{0}
+         
+         \PY{k}{for} \PY{n}{l} \PY{o+ow}{in} \PY{n}{train}\PY{p}{:}
+           \PY{n}{user}\PY{p}{,}\PY{n}{business} \PY{o}{=} \PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{reviewerID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{l}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+           \PY{n}{businessCount}\PY{p}{[}\PY{n}{business}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
+           \PY{n}{totalPurchases} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{1}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{mostPopular} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{businessCount}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{businessCount}\PY{p}{]}
-        \PY{n}{mostPopular}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
-        \PY{n}{mostPopular}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
-        
-        \PY{n}{return1} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
-        \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
-        \PY{k}{for} \PY{n}{ic}\PY{p}{,} \PY{n}{i} \PY{o+ow}{in} \PY{n}{mostPopular}\PY{p}{:}
-          \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{n}{ic}
-          \PY{n}{return1}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{i}\PY{p}{)}
-          \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{totalPurchases}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{:} \PY{k}{break}
+{\color{incolor}In [{\color{incolor}68}]:} \PY{n}{mostPopular} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{n}{businessCount}\PY{p}{[}\PY{n}{x}\PY{p}{]}\PY{p}{,} \PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{businessCount}\PY{p}{]}
+         \PY{n}{mostPopular}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+         \PY{n}{mostPopular}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+         
+         \PY{n}{return1} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
+         \PY{n}{count} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{ic}\PY{p}{,} \PY{n}{i} \PY{o+ow}{in} \PY{n}{mostPopular}\PY{p}{:}
+           \PY{n}{count} \PY{o}{+}\PY{o}{=} \PY{n}{ic}
+           \PY{n}{return1}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+           \PY{k}{if} \PY{n}{count} \PY{o}{\PYZgt{}} \PY{n}{totalPurchases}\PY{o}{/}\PY{l+m+mi}{2}\PY{p}{:} \PY{k}{break}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{validationResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-        \PY{n}{expectedResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-        \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
-        \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{validation}\PY{p}{:}
-            \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{in} \PY{n}{return1}\PY{p}{:}
-                \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
-            \PY{k}{else}\PY{p}{:}
-                \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
-            \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{l+m+mi}{100000}\PY{p}{:}
-                \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
-            \PY{k}{else}\PY{p}{:}
-                \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
-            \PY{n}{i} \PY{o}{=} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}
+{\color{incolor}In [{\color{incolor}69}]:} \PY{n}{validationResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{expectedResult} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+         \PY{n}{i} \PY{o}{=} \PY{l+m+mi}{0}
+         \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{validation}\PY{p}{:}
+             \PY{k}{if} \PY{n}{v}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{itemID}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o+ow}{in} \PY{n}{return1}\PY{p}{:}
+                 \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{validationResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{k}{if} \PY{n}{i} \PY{o}{\PYZlt{}} \PY{l+m+mi}{100000}\PY{p}{:}
+                 \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n}{expectedResult}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{i} \PY{o}{=} \PY{n}{i}\PY{o}{+}\PY{l+m+mi}{1}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{comparison} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{validationResult}\PY{p}{,} \PY{n}{expectedResult}\PY{p}{)}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}70}]:} \PY{n}{comparison} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{n}{validationResult}\PY{p}{,} \PY{n}{expectedResult}\PY{p}{)}\PY{p}{)}
          \PY{n}{accuracyV} \PY{o}{=} \PY{p}{[}\PY{n}{v}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{==} \PY{n}{v}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{k}{for} \PY{n}{v} \PY{o+ow}{in} \PY{n}{comparison}\PY{p}{]}
          \PY{n}{accuracy} \PY{o}{=} \PY{n+nb}{sum}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{accuracyV}\PY{p}{)}
 \end{Verbatim}
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{accuracy}
+{\color{incolor}In [{\color{incolor}71}]:} \PY{n}{accuracy}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}11}]:} 0.47252
+{\color{outcolor}Out[{\color{outcolor}71}]:} 0.471355
 \end{Verbatim}
             
     \subsubsection{Question 2}\label{question-2}
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}12}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
+{\color{incolor}In [{\color{incolor}72}]:} \PY{c+c1}{\PYZsh{}\PYZsh{}\PYZsh{} Would\PYZhy{}purchase baseline: just rank which businesses are popular and which are not, and return \PYZsq{}1\PYZsq{} if a business is among the top\PYZhy{}ranked}
          
          \PY{k}{def} \PY{n+nf}{predict}\PY{p}{(}\PY{n}{X}\PY{p}{,} \PY{n}{percentile}\PY{p}{)}\PY{p}{:}
              \PY{n}{return1} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{p}{)}
@@ -420,7 +420,7 @@
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{percent} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}73}]:} \PY{n}{percent} \PY{o}{=} \PY{p}{[}\PY{p}{]}
          \PY{n}{res} \PY{o}{=} \PY{p}{[}\PY{p}{]}
          \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{101}\PY{p}{)}\PY{p}{:}
              \PY{n}{percentile} \PY{o}{=} \PY{n}{i}\PY{o}{/}\PY{l+m+mi}{100}
@@ -432,7 +432,7 @@
 
 
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{percent}\PY{p}{,} \PY{n}{res}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}74}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{percent}\PY{p}{,} \PY{n}{res}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{percentile}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
          \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
@@ -445,25 +445,24 @@
     { \hspace*{\fill} \\}
     
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{percent}\PY{p}{[}\PY{n}{res}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}\PY{p}{)}\PY{p}{]}
+{\color{incolor}In [{\color{incolor}75}]:} \PY{n}{percent}\PY{p}{[}\PY{n}{res}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}\PY{p}{)}\PY{p}{]}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}19}]:} 0.01
+{\color{outcolor}Out[{\color{outcolor}75}]:} 0.0
 \end{Verbatim}
             
     \begin{Verbatim}[commandchars=\\\{\}]
-{\color{incolor}In [{\color{incolor}20}]:} \PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}
+{\color{incolor}In [{\color{incolor}76}]:} \PY{n+nb}{max}\PY{p}{(}\PY{n}{res}\PY{p}{)}
 \end{Verbatim}
 
 
 \begin{Verbatim}[commandchars=\\\{\}]
-{\color{outcolor}Out[{\color{outcolor}20}]:} 0.500185
+{\color{outcolor}Out[{\color{outcolor}76}]:} 0.50003
 \end{Verbatim}
             
-    The best performance is achieved when using the 1st percentile. The
-accuracy is 0.500185
+    The best performance is achieved when predicting all pairs with False.
 
     \subsubsection{Question 3}\label{question-3}
 
@@ -750,8 +749,6 @@ it - -0.004816703944121101
              \PY{n}{svms}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{clf}\PY{p}{)}
 \end{Verbatim}
 
-
-    
 
     \begin{Verbatim}[commandchars=\\\{\}]
 {\color{incolor}In [{\color{incolor}28}]:} \PY{n}{test\PYZus{}accuracies}
